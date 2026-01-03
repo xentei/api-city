@@ -6,10 +6,6 @@ app = Flask(__name__)
 
 @app.route("/vuelos-europa", methods=["GET"])
 def vuelos_europa():
-    """
-    Endpoint JSON:
-    GET /vuelos-europa  ->  { "ok": true, "total": N, "vuelos": [...] }
-    """
     try:
         vuelos = get_flights_via_playwright()
     except Exception as e:
@@ -26,11 +22,10 @@ def vuelos_europa():
     )
 
 
-# Para plataformas que importan la app como módulo (uwsgi, gunicorn, coolify, etc.)
-def create_app():
-    return app
+# ya no necesitamos create_app; gunicorn usará app directamente
+# def create_app():
+#     return app
 
 
 if __name__ == "__main__":
-    # Para test local
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=8000, debug=True)
